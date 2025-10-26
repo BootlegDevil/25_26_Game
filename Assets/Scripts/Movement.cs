@@ -8,6 +8,8 @@ public class Movement : MonoBehaviour
     public float jumpForce = 300;
     private float moveInput = 0;
     public bool isJump = false;
+    public float jumpcounter = 2;
+    public float speed = 1;
 
     public Rigidbody2D rb;
     public SpriteRenderer spriterenderer;
@@ -18,8 +20,6 @@ public class Movement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         spriterenderer = GetComponent<SpriteRenderer>();
     }
-
-    // Update is called once per frame
     void Update()
     {
         moveInput = Input.GetAxis("Horizontal");
@@ -27,15 +27,31 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce(Vector2.up * jumpForce);
+            isJump = true;
         }
     }
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(moveInput * moveSpeed * Time.deltaTime, rb.velocity.y);
-            if (isJump && groundChecker.isGrounded)
+        float moveInput = Input.GetAxis("Horizontal");
+
+        rb.velocity = new Vector2(speed * moveInput * moveSpeed * Time.fixedDeltaTime, rb.velocity.y);
+        if (groundChecker.isGrounded)
+        {
+            jumpcounter = 2;
+        }
+        if (isJump && jumpcounter > 0)
         {
             rb.AddForce(Vector2.up * jumpForce);
             isJump = false;
+            jumpcounter = jumpcounter - 1;
+        }
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            speed = 2;
+        }
+        else
+        {
+            speed = 1;
         }
     }
 }

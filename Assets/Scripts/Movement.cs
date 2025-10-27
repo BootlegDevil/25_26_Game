@@ -2,56 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class postac : MonoBehaviour
 {
-    public float moveSpeed = 1000;
-    public float jumpForce = 300;
-    private float moveInput = 0;
-    public bool isJump = false;
-    public float jumpcounter = 2;
-    public float speed = 1;
 
-    public Rigidbody2D rb;
-    public SpriteRenderer spriterenderer;
+    public float moveSpeed = 5;
+    public float jumpForce = 300;
+    public float moveInput = 5;
+    public Rigidbody2D rigibody2;
+    public SpriteRenderer spriteRenderer;
     public GroundChecker groundChecker;
-    
+    public bool isJump = false;
+    public bool DoubleJump;
+    public float speed = 1;
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        spriterenderer = GetComponent<SpriteRenderer>();
+        rigibody2 = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     void Update()
     {
         moveInput = Input.GetAxis("Horizontal");
-        
+
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            rb.AddForce(Vector2.up * jumpForce);
-            isJump = true;
+            if (groundChecker.isGrounded || DoubleJump)
+            {
+                isJump = true;
+            }
+        }
+        if ((Input.GetKeyDown(KeyCode.Space) && groundChecker.isGrounded))
+        {
+            DoubleJump = false;
         }
     }
     private void FixedUpdate()
     {
-        float moveInput = Input.GetAxis("Horizontal");
+        rigibody2.velocity = new Vector2(moveInput * moveSpeed * Time.fixedDeltaTime, rigibody2.velocity.y);
+        spriteRenderer.flipX = rigibody2.velocity.x < 0f;
 
-        rb.velocity = new Vector2(speed * moveInput * moveSpeed * Time.fixedDeltaTime, rb.velocity.y);
-        if (groundChecker.isGrounded)
+        if (isJump)
         {
-            jumpcounter = 2;
-        }
-        if (isJump && jumpcounter > 0)
-        {
-            rb.AddForce(Vector2.up * jumpForce);
+            rigibody2.AddForce(Vector2.up * jumpForce);
+            DoubleJump = !DoubleJump;
             isJump = false;
-            jumpcounter = jumpcounter - 1;
         }
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            speed = 2;
+            moveSpeed = moveSpeed * 1 * 2;
         }
         else
         {
-            speed = 1;
+            moveSpeed = moveSpeed * 1;
         }
     }
 }

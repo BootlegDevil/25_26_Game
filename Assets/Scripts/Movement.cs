@@ -13,7 +13,6 @@ public class postac : MonoBehaviour
     public GroundChecker groundChecker;
     public bool isJump = false;
     public bool DoubleJump;
-    public float speed = 1;
     void Start()
     {
         rigibody2 = GetComponent<Rigidbody2D>();
@@ -49,7 +48,7 @@ public class postac : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            moveSpeed = moveSpeed * 1 * 2;
+            moveSpeed = moveSpeed * 2;
         }
         else
         {

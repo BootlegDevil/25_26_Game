@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -214,6 +215,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0c5c9838006b9a4195029c664afffc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1675853904}
+  smoothTime: 0.2
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &707858933
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,10 +579,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f949b4b176260143b0d1af4794fb387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 200
+  moveSpeed: 20
+  runSpeed: 40
   jumpForce: 300
   moveInput: 0
-  rigibody2: {fileID: 0}
+  rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
   groundChecker: {fileID: 707858935}
   isJump: 0

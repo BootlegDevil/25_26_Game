@@ -6,16 +6,17 @@ public class postac : MonoBehaviour
 {
 
     public float moveSpeed = 5;
+    public float runSpeed = 10;
     public float jumpForce = 300;
     public float moveInput = 5;
-    public Rigidbody2D rigibody2;
+    public Rigidbody2D rb;
     public SpriteRenderer spriteRenderer;
     public GroundChecker groundChecker;
     public bool isJump = false;
     public bool DoubleJump;
     void Start()
     {
-        rigibody2 = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
     void Update()
@@ -37,22 +38,22 @@ public class postac : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        rigibody2.velocity = new Vector2(moveInput * moveSpeed * Time.fixedDeltaTime, rigibody2.velocity.y);
-        spriteRenderer.flipX = rigibody2.velocity.x < 0f;
+        rb.velocity = new Vector2(moveInput * moveSpeed * Time.fixedDeltaTime, rb.velocity.y);
+        spriteRenderer.flipX = rb.velocity.x < 0f;
 
         if (isJump)
         {
-            rigibody2.AddForce(Vector2.up * jumpForce);
+            rb.AddForce(Vector2.up * jumpForce);
             DoubleJump = !DoubleJump;
             isJump = false;
         }
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            moveSpeed = moveSpeed * 2;
+            rb.velocity = new Vector2(moveInput * runSpeed, rb.velocity.y);
         }
         else
         {
-            moveSpeed = moveSpeed * 1;
+            rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
         }
     }
 }

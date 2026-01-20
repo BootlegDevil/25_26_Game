@@ -6,10 +6,8 @@ public class GroundChecker : MonoBehaviour
 {
     // Start is called before the first frame update
     public bool isGrounded;
-    public BoxCollider2D collider;
     public void Start()
     {
-        collider = 
         GetComponent <BoxCollider2D>();
     }
 
